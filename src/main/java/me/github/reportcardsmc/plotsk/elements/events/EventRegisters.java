@@ -20,7 +20,7 @@ public class EventRegisters {
         Has string value for plot id
         Has player value for player who caused event
          */
-        Skript.registerEvent("PlotSquared: Plot Enter", PlotSkEvent.class, PlayerEnterPlot.class, "[PlotSquared] plot enter[ing]", "[PlotSquared] enter[ing] plot")
+        Skript.registerEvent("PlotSquared: Plot Enter", PlotSkEvent.class, PlayerEnterPlot.class, "[PlotSquared] [player] plot enter[ing]", "[PlotSquared] [player] enter[ing] plot")
                 .description("Called when a player goes into a plot")
                 .examples("on plot enter:", "\tbroadcast \"%player% has went into plot %event-string%\"");
         EventValues.registerEventValue(PlayerEnterPlot.class, String.class, new Getter<String, PlayerEnterPlot>() {
@@ -38,7 +38,7 @@ public class EventRegisters {
         Has string value for plot id
         Has player value for player who caused event
          */
-        Skript.registerEvent("PlotSquared: Plot Exit", PlotSkEvent.class, PlayerLeavePlot.class, "[PlotSquared] plot exit[ing]", "[PlotSquared] exit[ing] plot")
+        Skript.registerEvent("PlotSquared: Plot Exit", PlotSkEvent.class, PlayerLeavePlot.class, "[PlotSquared] [player] plot exit[ing]", "[PlotSquared] [player] exit[ing] plot")
                 .description("Called when a player leaves a plot")
                 .examples("on plot exit:", "\tbroadcast \"%player% has left plot %event-string%\"");
         EventValues.registerEventValue(PlayerLeavePlot.class, String.class, new Getter<String, PlayerLeavePlot>() {
@@ -117,7 +117,7 @@ public class EventRegisters {
         Has integer value for plot rating value
         Has player value for player who caused event
          */
-        Skript.registerEvent("PlotSquared: Plot Rating", PlotSkEvent.class, PlayerRatePlot.class, "[PlotSquared] plot rat(e|ing)", "[PlotSquared] rat(e|ing) plot")
+        Skript.registerEvent("PlotSquared: Plot Rating", PlotSkEvent.class, PlayerRatePlot.class, "[PlotSquared] [player] plot rat(e|ing)", "[PlotSquared] [player] rat(e|ing) plot")
                 .description("Called when a player rates a plot")
                 .examples("on plot rate:", "\tbroadcast \"%player% has voted %event-integer% on %event-string%\"");
         EventValues.registerEventValue(PlayerRatePlot.class, String.class, new Getter<String, PlayerRatePlot>() {
@@ -141,7 +141,7 @@ public class EventRegisters {
         Has player value for player who caused event
         Has "denied player" for player who got denied
          */
-        Skript.registerEvent("PlotSquared: Plot Denied", PlotSkEvent.class, PlayerDeniedFromPlot.class, "[PlotSquared] player deny player [from plot]", "[PlotSquared] player den(y|ied) from plot")
+        Skript.registerEvent("PlotSquared: Plot Denied", PlotSkEvent.class, PlayerDeniedFromPlot.class, "[PlotSquared] player deny[ing] player [from plot]", "[PlotSquared] player den(y|ied) from plot")
                 .description("Called when a player denies a player from a plot")
                 .examples("on player deny player from plot:", "\tbroadcast \"%player% denied %denied player% from %event-string%\"");
         EventValues.registerEventValue(PlayerDeniedFromPlot.class, String.class, new Getter<String, PlayerDeniedFromPlot>() {
@@ -160,7 +160,7 @@ public class EventRegisters {
         Has player value for player who caused event
         Has "undenied player" for player who got undenied
          */
-        Skript.registerEvent("PlotSquared: Plot Undenied", PlotSkEvent.class, PlayerUndeniedFromPlot.class, "[PlotSquared] player undeny player [from plot]", "[PlotSquared] player unden(y|ied) from plot")
+        Skript.registerEvent("PlotSquared: Plot Undenied", PlotSkEvent.class, PlayerUndeniedFromPlot.class, "[PlotSquared] player undeny[ing] player [from plot]", "[PlotSquared] player unden(y|ied) from plot")
                 .description("Called when a player undenies a player from a plot")
                 .examples("on player undeny player from plot:", "\tbroadcast \"%player% undenied %undenied player% from %event-string%\"");
         EventValues.registerEventValue(PlayerUndeniedFromPlot.class, String.class, new Getter<String, PlayerUndeniedFromPlot>() {
@@ -179,7 +179,7 @@ public class EventRegisters {
         Has player value for player who caused event
         Has "trusted player" for player who got trusted
          */
-        Skript.registerEvent("PlotSquared: Plot Trusted", PlotSkEvent.class, PlayerTrustedOnPlot.class, "[PlotSquared] player trust player [(in|on|at) plot]", "[PlotSquared] player trusted (in|on|at) plot")
+        Skript.registerEvent("PlotSquared: Plot Trusted", PlotSkEvent.class, PlayerTrustedOnPlot.class, "[PlotSquared] player trust player [(in|on|at|to) [a] plot]", "[PlotSquared] player trusted (in|on|at|to) [a] plot")
                 .description("Called when a player trusts a player on a plot")
                 .examples("on player trust player in plot:", "\tbroadcast \"%player% trusted %trusted player% in %event-string%\"");
         EventValues.registerEventValue(PlayerTrustedOnPlot.class, String.class, new Getter<String, PlayerTrustedOnPlot>() {
@@ -198,7 +198,7 @@ public class EventRegisters {
         Has player value for player who caused event
         Has "trusted player" for player who got untrusted
          */
-        Skript.registerEvent("PlotSquared: Plot Untrusted", PlotSkEvent.class, PlayerUntrustedFromPlot.class, "[PlotSquared] player untrust player [in plot]", "[PlotSquared] player untrusted (on|in) plot")
+        Skript.registerEvent("PlotSquared: Plot Untrusted", PlotSkEvent.class, PlayerUntrustedFromPlot.class, "[PlotSquared] player untrust player [(in|from [a]) plot]", "[PlotSquared] player untrusted (in|from [a]) plot")
                 .description("Called when a player untrusts a player on a plot")
                 .examples("on player untrust player in plot:", "\tbroadcast \"%player% untrusted %untrusted player% in %event-string%\"");
         EventValues.registerEventValue(PlayerUntrustedFromPlot.class, String.class, new Getter<String, PlayerUntrustedFromPlot>() {
@@ -216,7 +216,7 @@ public class EventRegisters {
         Has string value for plot id
         Has player value for player who caused event
          */
-        Skript.registerEvent("PlotSquared: Plot Teleport", PlotSkEvent.class, PlotTeleportEvent.class, "[PlotSquared] [player] teleport to plot")
+        Skript.registerEvent("PlotSquared: Plot Teleport", PlotSkEvent.class, PlotTeleportEvent.class, "[PlotSquared] [player] teleport to [a] plot")
                 .description("Called when a player teleports to a plot")
                 .examples("on player teleport to plot:", "\tbroadcast \"%player% teleported to %event-string%\"");
         EventValues.registerEventValue(PlotTeleportEvent.class, String.class, new Getter<String, PlotTeleportEvent>() {
