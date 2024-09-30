@@ -6,9 +6,9 @@ import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
-import com.sk89q.worldedit.math.BlockVector3;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Name("Location in Road")
@@ -18,13 +18,14 @@ import org.jetbrains.annotations.Nullable;
 @RequiredPlugins("PlotSquared")
 public class LocationInRoadCond extends Condition {
     static {
-        Skript.registerCondition(LocationInRoadCond.class, "[PlotSquared] %location% (1¦is|2¦is(n't| not)) in[side] [the] [plot] road");
+        Skript.registerCondition(LocationInRoadCond.class, "[PlotSquared] %location% is in[side] [the] [plot] road[s]",
+                "[PlotSquared] %location% is(n't| not) in[side] [the] [plot] road[s]");
     }
 
     Expression<Location> location;
 
     @Override
-    public boolean check(Event e) {
+    public boolean check(@NotNull Event e) {
         Location loc = location.getSingle(e);
         if (loc == null) return isNegated();
         com.plotsquared.core.location.Location plotLoc = com.plotsquared.core.location.Location.at(loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
@@ -34,15 +35,15 @@ public class LocationInRoadCond extends Condition {
     }
 
     @Override
-    public String toString(@Nullable Event e, boolean debug) {
+    public @NotNull String toString(@Nullable Event e, boolean debug) {
         return "Location in plot world road " + location.toString(e, debug);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
+    public boolean init(Expression<?>[] exprs, int matchedPattern, @NotNull Kleenean isDelayed, SkriptParser.@NotNull ParseResult parseResult) {
         location = (Expression<Location>) exprs[0];
-        setNegated(parseResult.mark == 2);
+        setNegated(matchedPattern == 1);
         return true;
     }
 }
