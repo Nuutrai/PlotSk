@@ -26,18 +26,23 @@ import org.jetbrains.annotations.Nullable;
 @RequiredPlugins("PlotSquared")
 public class PlotHomeExpr extends SimpleExpression<Location> {
     static {
-        Skript.registerExpression(PlotHomeExpr.class, Location.class, ExpressionType.COMBINED, "[PlotSquared] [the] home [location] of plot [with id] %string%");
+        Skript.registerExpression(PlotHomeExpr.class, Location.class, ExpressionType.COMBINED, "[PlotSquared] [the] home [location] of %plot%");
     }
 
-    private Expression<String> plotID;
+    private Expression<Plot> plot;
 
     @Nullable
     @Override
     protected Location[] get(Event e) {
-        Plot plot;
-        if (plotID.getSingle(e) == null || (plot = PlotSquaredUtil.getPlot(plotID.getSingle(e))) == null) return null;
+
+        Plot plot = this.plot.getSingle(e);
+
+        if (plot == null) return null;
+
         BlockVector3 vector3 = plot.getHomeSynchronous().getBlockVector3();
+
         return new Location[]{new Location(Bukkit.getWorld(plot.getWorldName()), vector3.getX(), vector3.getY(), vector3.getZ())};
+
     }
 
     @Override
@@ -52,14 +57,16 @@ public class PlotHomeExpr extends SimpleExpression<Location> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "Home of plot: " + plotID.toString(e, debug);
+        return "Home of plot: " + plot.getSingle(e).getId();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
-        plotID = (Expression<String>) exprs[0];
+
+        plot = (Expression<Plot>) exprs[0];
         return true;
+
     }
 
     @Nullable
@@ -70,13 +77,19 @@ public class PlotHomeExpr extends SimpleExpression<Location> {
 
     @Override
     public void change(Event e, @Nullable Object[] delta, Changer.ChangeMode mode) {
+
         Location location = (Location) delta[0];
-        Plot plot;
-        if (plotID.getSingle(e) == null || (plot = PlotSquaredUtil.getPlot(plotID.getSingle(e))) == null) return;
+        Plot plot = this.plot.getSingle(e);
+
+        if (plot == null) return;
+
         com.plotsquared.core.location.Location bot = plot.getManager().getPlotBottomLocAbs(plot.getId());
+
         int x = location.getBlockX() - bot.getX();
         int z = location.getBlockZ() - bot.getZ();
         int y = location.getBlockY();
+
         plot.setHome(new BlockLoc(x, y, z, location.getYaw(), location.getPitch()));
+
     }
 }

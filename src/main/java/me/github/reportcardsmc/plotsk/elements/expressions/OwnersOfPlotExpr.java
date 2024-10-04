@@ -25,18 +25,22 @@ import static me.github.reportcardsmc.plotsk.utils.PlotSquaredUtil.getPlot;
 public class OwnersOfPlotExpr extends SimpleExpression<OfflinePlayer> {
 
     static {
-        Skript.registerExpression(OwnersOfPlotExpr.class, OfflinePlayer.class, ExpressionType.COMBINED, "[PlotSquared] owners of plot [with id] %string%", "[PlotSquared] plot owners of [id] %string%");
+        Skript.registerExpression(OwnersOfPlotExpr.class, OfflinePlayer.class, ExpressionType.COMBINED, "[PlotSquared] owners of [the] %plot%", "[PlotSquared] plot owners of %plot%");
     }
 
-    private Expression<String> id;
+    private Expression<Plot> plot;
 
     @Nullable
     @Override
     protected OfflinePlayer[] get(Event e) {
-        Plot plot;
-        if (id.getSingle(e) == null || (plot = getPlot(id.getSingle(e))) == null || plot.getOwner() == null)
+
+        Plot plot = this.plot.getSingle(e);
+
+        if ((plot == null) || plot.getOwner() == null)
             return null; // Inspired from SkUniversal (us.donut.skuniversal.plotsquared.expressions.ExprPlotOwner)
+
         return plot.getOwners().stream().map(Bukkit::getOfflinePlayer).toArray(OfflinePlayer[]::new);
+
     }
 
     @Override
@@ -51,14 +55,16 @@ public class OwnersOfPlotExpr extends SimpleExpression<OfflinePlayer> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "Owners of plot: " + id.toString(e, debug);
+        return "owners of plot " + plot.getSingle(e).getId();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
-        id = (Expression<String>) exprs[0];
+
+        plot = (Expression<Plot>) exprs[0];
         return true;
+
     }
 
     @Override

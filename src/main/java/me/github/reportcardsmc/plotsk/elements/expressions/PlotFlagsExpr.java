@@ -15,22 +15,25 @@ import org.jetbrains.annotations.Nullable;
 
 @Name("Flags of Plot")
 @Description("A list of flags that are added to the plot")
-@Examples({"command /flags:", "    trigger:", "        send \"Flags: %flags in plot plot at player%\""})
+@Examples({"command /flags:", "    trigger:", "        send \"Flags: %flags in plot at player%\""})
 @Since("1.0")
 @RequiredPlugins("PlotSquared")
 public class PlotFlagsExpr extends SimpleExpression<String> {
     static {
-        Skript.registerExpression(PlotFlagsExpr.class, String.class, ExpressionType.COMBINED, "[PlotSquared] [value of] [all] flags (of|in|for) plot [with id] %string%");
+        Skript.registerExpression(PlotFlagsExpr.class, String.class, ExpressionType.COMBINED, "[PlotSquared] [value of] [all] flags (of|in|for) %plot%");
     }
 
-    private Expression<String> id;
+    private Expression<Plot> plot;
 
     @Nullable
     @Override
     protected String[] get(Event e) {
-        Plot plot;
-        if (id.getSingle(e) == null | (plot = PlotSquaredUtil.getPlot(id.getSingle(e))) == null)
+
+        Plot plot = this.plot.getSingle(e);
+
+        if (plot == null)
             return null;
+
         return plot.getFlags().stream().map(PlotFlag::getName).toArray(String[]::new);
     }
 
@@ -46,13 +49,15 @@ public class PlotFlagsExpr extends SimpleExpression<String> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "All Flags of plot: " + id.toString(e, debug);
+        return "All Flags of plot: " + plot.getSingle(e).getId();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
-        id = (Expression<String>) exprs[0];
+
+        plot = (Expression<Plot>) exprs[0];
         return true;
+
     }
 }

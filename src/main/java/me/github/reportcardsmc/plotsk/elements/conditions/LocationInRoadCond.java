@@ -18,7 +18,10 @@ import org.jetbrains.annotations.Nullable;
 @RequiredPlugins("PlotSquared")
 public class LocationInRoadCond extends Condition {
     static {
-        Skript.registerCondition(LocationInRoadCond.class, "[PlotSquared] %location% (1¦is|2¦is(n't| not)) in[side] [the] [plot] road");
+        Skript.registerCondition(LocationInRoadCond.class,
+                "[PlotSquared] %location% is in[side] [the] [plot] road",
+                "[PlotSquared] %location% is(n't| not) in[side] [the] [plot] road"
+        );
     }
 
     Expression<Location> location;
@@ -42,7 +45,7 @@ public class LocationInRoadCond extends Condition {
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         location = (Expression<Location>) exprs[0];
-        setNegated(parseResult.mark == 2);
+        setNegated(matchedPattern == 1);
         return true;
     }
 }

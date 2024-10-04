@@ -17,24 +17,28 @@ import org.jetbrains.annotations.Nullable;
 
 @Name("Plot Flag")
 @Description("Get the value of a plot flag")
-@Examples({"command /flag <text>:", "    trigger:", "        send \"Flag %arg-1%: %flag arg-1 in plot plot at player%\""})
+@Examples({"command /flag <text>:", "    trigger:", "        send \"Flag %arg-1%: %flag arg-1 in plot at player%\""})
 @Since("1.0")
 @RequiredPlugins("PlotSquared")
 public class PlotFlagExpr extends SimpleExpression<Object> {
     static {
-        Skript.registerExpression(PlotFlagExpr.class, Object.class, ExpressionType.COMBINED, "[PlotSquared] [value of] [the] flag %string% (in|for) plot [with id] %string%");
+        Skript.registerExpression(PlotFlagExpr.class, Object.class, ExpressionType.COMBINED, "[PlotSquared] [value of] [the] flag %string% (in|for) %plot%");
     }
 
-    private Expression<String> id;
+    private Expression<Plot> plot;
     private Expression<String> flag;
 
     @Nullable
     @Override
     protected Object[] get(Event e) {
-        Plot plot;
-        if (id.getSingle(e) == null || flag.getSingle(e) == null || (plot = PlotSquaredUtil.getPlot(id.getSingle(e))) == null)
+
+        Plot plot = this.plot.getSingle(e);
+
+        if (flag.getSingle(e) == null || (plot == null))
             return null;
+
         return new Object[]{plot.getFlag(GlobalFlagContainer.getInstance().getFlagFromString(flag.getSingle(e)))};
+
     }
 
     @Override
@@ -49,15 +53,17 @@ public class PlotFlagExpr extends SimpleExpression<Object> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "Flag " + flag.toString(e, debug) + " of plot: " + id.toString(e, debug);
+        return "flag " + flag.toString(e, debug) + " of plot " + plot.getSingle(e).getId();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
-        id = (Expression<String>) exprs[1];
+
+        plot = (Expression<Plot>) exprs[1];
         flag = (Expression<String>) exprs[0];
         return true;
+
     }
 
     @Nullable
@@ -68,10 +74,13 @@ public class PlotFlagExpr extends SimpleExpression<Object> {
 
     @Override
     public void change(Event e, @Nullable Object[] delta, Changer.ChangeMode mode) {
+
         Boolean value = (Boolean) delta[0];
-        Plot plot;
+        Plot plot = this.plot.getSingle(e);
         String f = flag.getSingle(e);
-        if (id.getSingle(e) == null || f == null || value == null || (plot = PlotSquaredUtil.getPlot(id.getSingle(e))) == null) return;
+
+        if (f == null || value == null || plot == null) return;
+
         switch (mode) {
             case SET:
                 plot.setFlag(GlobalFlagContainer.getInstance().getFlagClassFromString(f), value.toString());

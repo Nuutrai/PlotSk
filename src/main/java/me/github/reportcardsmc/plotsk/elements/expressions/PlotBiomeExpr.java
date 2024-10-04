@@ -20,17 +20,21 @@ import org.jetbrains.annotations.Nullable;
 @RequiredPlugins("PlotSquared")
 public class PlotBiomeExpr extends SimpleExpression<String> {
     static {
-        Skript.registerExpression(PlotBiomeExpr.class, String.class, ExpressionType.COMBINED, "[PlotSquared] [the] biome of plot [with id] %string%");
+        Skript.registerExpression(PlotBiomeExpr.class, String.class, ExpressionType.COMBINED, "[PlotSquared] [the] biome of [the] %plot%");
     }
 
-    private Expression<String> id;
+    private Expression<Plot> plot;
 
     @Nullable
     @Override
     protected String[] get(Event e) {
-        Plot plot;
-        if (id.getSingle(e) == null || (plot = PlotSquaredUtil.getPlot(id.getSingle(e))) == null) return null;
+
+        Plot plot = this.plot.getSingle(e);
+
+        if (plot == null) return null;
+
         return new String[]{plot.getBiomeSynchronous().toString()};
+
     }
 
     @Override
@@ -45,13 +49,15 @@ public class PlotBiomeExpr extends SimpleExpression<String> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "Biome of plot: " + id.toString(e, debug);
+        return "biome of plot " + plot.getSingle(e).getId();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
-        id = (Expression<String>) exprs[0];
+
+        plot = (Expression<Plot>) exprs[0];
         return true;
+
     }
 }

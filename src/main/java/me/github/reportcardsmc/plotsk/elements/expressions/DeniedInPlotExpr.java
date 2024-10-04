@@ -15,6 +15,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
+
 import java.util.HashSet;
 
 import static me.github.reportcardsmc.plotsk.utils.PlotSquaredUtil.getPlot;
@@ -27,17 +28,21 @@ import static me.github.reportcardsmc.plotsk.utils.PlotSquaredUtil.getPlot;
 public class DeniedInPlotExpr extends SimpleExpression<OfflinePlayer> {
 
     static {
-        Skript.registerExpression(DeniedInPlotExpr.class, OfflinePlayer.class, ExpressionType.COMBINED, "[PlotSquared] denied player[s] (in|on) plot [with id] %string%");
+        Skript.registerExpression(DeniedInPlotExpr.class, OfflinePlayer.class, ExpressionType.COMBINED, "[PlotSquared] denied player[s] (in|on) [the] %plot%");
     }
 
-    private Expression<String> id;
+    private Expression<Plot> plot;
 
     @Nullable
     @Override
     protected OfflinePlayer[] get(Event e) {
-        Plot plot;
-        if (id.getSingle(e) == null || (plot = getPlot(id.getSingle(e))) == null) return null;
+
+        Plot plot = this.plot.getSingle(e);
+
+        if (plot == null) return null;
+
         return plot.getDenied().stream().map(Bukkit::getOfflinePlayer).toArray(OfflinePlayer[]::new);
+
     }
 
     @Override
@@ -52,22 +57,29 @@ public class DeniedInPlotExpr extends SimpleExpression<OfflinePlayer> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "Find denied players in plot " + id.toString(e, debug);
+        return "Find denied players in plot " + plot.getSingle(e).getId();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
-        id = (Expression<String>) exprs[0];
+
+        plot = (Expression<Plot>) exprs[0];
         return true;
+
     }
 
     @Override
     public void change(Event e, @Nullable Object[] delta, Changer.ChangeMode mode) {
-        Plot plot;
-        if (id.getSingle(e) == null || (plot = getPlot(id.getSingle(e))) == null) return;
+
+        Plot plot = this.plot.getSingle(e);
+
+        if (plot == null) return;
+
         OfflinePlayer player = (OfflinePlayer) delta[0];
+
         if (player == null) return;
+
         switch (mode) {
             case ADD:
                 plot.addDenied(player.getUniqueId());

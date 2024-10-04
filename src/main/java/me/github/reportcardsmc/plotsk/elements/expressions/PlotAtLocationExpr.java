@@ -17,21 +17,27 @@ import org.jetbrains.annotations.Nullable;
 @Examples({"command /plot:", "    trigger:", "        send \"Plot: %plot at player%\""})
 @Since("1.0")
 @RequiredPlugins("PlotSquared")
-public class PlotAtLocationExpr extends SimpleExpression<String> {
+public class PlotAtLocationExpr extends SimpleExpression<Plot> {
     static {
-        Skript.registerExpression(PlotAtLocationExpr.class, String.class, ExpressionType.COMBINED, "[the] [ID of [the]] [PlotSquared] plot at %location%");
+        Skript.registerExpression(PlotAtLocationExpr.class, Plot.class, ExpressionType.COMBINED, "[the] [PlotSquared] plot at %location%");
     }
 
     private Expression<Location> loc;
 
     @Nullable
     @Override
-    protected String[] get(Event e) {
+    protected Plot[] get(Event e) {
+
         Location l = loc.getSingle(e);
+
         if (l == null) return null;
+
         com.plotsquared.core.location.Location plotLoc = com.plotsquared.core.location.Location.at(l.getWorld().getName(), l.getBlockX(), l.getBlockY(), l.getBlockZ());
+
         Plot plot = plotLoc.getPlot();
-        return plot == null ? null : new String[]{plot.getId().toString()};
+
+        return plot == null ? null : new Plot[]{plot};
+
     }
 
     @Override
@@ -40,19 +46,21 @@ public class PlotAtLocationExpr extends SimpleExpression<String> {
     }
 
     @Override
-    public Class<? extends String> getReturnType() {
-        return String.class;
+    public Class<? extends Plot> getReturnType() {
+        return Plot.class;
     }
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "Plot at Location: " + loc.toString(e, debug);
+        return "plot at location: " + loc.toString(e, debug);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
+
         loc = (Expression<Location>) exprs[0];
         return true;
+
     }
 }
