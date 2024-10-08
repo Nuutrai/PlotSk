@@ -15,8 +15,8 @@ public class EffTrust extends Effect {
 
     static {
         Skript.registerEffect(EffTrust.class,
-                "trust %offlineplayer% to [plot] %plot%",
-                "untrust %offlineplayer% from [plot] %plot%");
+                "trust %offlineplayer% to %plot%",
+                "untrust %offlineplayer% from %plot%");
     }
 
     private Expression<Plot> plot;
@@ -54,7 +54,7 @@ public class EffTrust extends Effect {
 
     @Override
     public String toString(@org.jetbrains.annotations.Nullable Event event, boolean b) {
-        return "" + (untrust ? "un" : "") + "trust " + player.toString() + (untrust ? "from" : "to") + " plot with id " + plot.toString();
+        return (untrust ? "un" : "") + "trust " + player.toString() + (untrust ? "from" : "to") + " plot with id " + plot.toString();
     }
 
 }
