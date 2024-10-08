@@ -17,8 +17,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 
-import static me.github.reportcardsmc.plotsk.utils.PlotSquaredUtil.getPlot;
-
 @Name("Trusted Players in Plot")
 @Description("A list of players that are trusted in the plot")
 @Examples({"command /trusted:", "    trigger:", "        send \"Trusted players: %trusted players in plot plot at player%\""})
@@ -27,17 +25,16 @@ import static me.github.reportcardsmc.plotsk.utils.PlotSquaredUtil.getPlot;
 public class TrustedInPlotExpr extends SimpleExpression<OfflinePlayer> {
 
     static {
-        Skript.registerExpression(TrustedInPlotExpr.class, OfflinePlayer.class, ExpressionType.COMBINED, "[PlotSquared] trusted player[s] (in|on) plot [with id] %string%");
+        Skript.registerExpression(TrustedInPlotExpr.class, OfflinePlayer.class, ExpressionType.COMBINED, "[PlotSquared] trusted player[s] (in|on) %plot%");
     }
 
-    private Expression<String> id;
+    private Expression<Plot> plot;
 
     @Nullable
     @Override
     protected OfflinePlayer[] get(Event e) {
-        Plot plot;
-        if (id.getSingle(e) == null || (plot = getPlot(id.getSingle(e))) == null) return null;
-        return plot.getTrusted().stream().map(Bukkit::getOfflinePlayer).toArray(OfflinePlayer[]::new);
+        if (this.plot.getSingle(e) == null) return null;
+        return plot.getSingle(e).getTrusted().stream().map(Bukkit::getOfflinePlayer).toArray(OfflinePlayer[]::new);
     }
 
     @Override
@@ -52,32 +49,31 @@ public class TrustedInPlotExpr extends SimpleExpression<OfflinePlayer> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "Find trusted players in plot " + id.toString(e, debug);
+        return "Find trusted players in plot " + plot.toString(e, debug);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
-        id = (Expression<String>) exprs[0];
+        plot = (Expression<Plot>) exprs[0];
         return true;
     }
 
     @Override
     public void change(Event e, @Nullable Object[] delta, Changer.ChangeMode mode) {
-        Plot plot;
-        if (id.getSingle(e) == null || (plot = getPlot(id.getSingle(e))) == null) return;
+        if (this.plot.getSingle(e) == null) return;
         OfflinePlayer player = (OfflinePlayer) delta[0];
         if (player == null) return;
         switch (mode) {
             case ADD:
-                plot.addTrusted(player.getUniqueId());
+                plot.getSingle(e).addTrusted(player.getUniqueId());
                 break;
             case REMOVE:
-                plot.removeTrusted(player.getUniqueId());
+                plot.getSingle(e).removeTrusted(player.getUniqueId());
                 break;
             case REMOVE_ALL:
             case RESET:
-                plot.setTrusted(new HashSet<>());
+                plot.getSingle(e).setTrusted(new HashSet<>());
                 break;
         }
     }

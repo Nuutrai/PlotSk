@@ -14,11 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
-
-
 import java.util.HashSet;
-
-import static me.github.reportcardsmc.plotsk.utils.PlotSquaredUtil.getPlot;
 
 @Name("Denied Players in Plot")
 @Description("A list of players that are denied in the plot")
@@ -57,7 +53,7 @@ public class DeniedInPlotExpr extends SimpleExpression<OfflinePlayer> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "Find denied players in plot " + plot.getSingle(e).getId();
+        return "Find denied players in plot " + plot.getSingle(e).toString();
     }
 
     @SuppressWarnings("unchecked")

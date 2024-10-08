@@ -7,7 +7,6 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
 import com.plotsquared.core.plot.Plot;
-import me.github.reportcardsmc.plotsk.utils.PlotSquaredUtil;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
@@ -21,20 +20,19 @@ public class PlayerIsTrustedCond extends Condition {
 
     static {
         Skript.registerCondition(PlayerIsTrustedCond.class,
-                "[PlotSquared] %offlineplayer% is trusted in [plot] [with id] %string%",
-                "[PlotSquared] %offlineplayer% is(n't| not) trusted in [plot] [with id] %string%"
+                "[PlotSquared] %offlineplayer% is trusted in %plot%",
+                "[PlotSquared] %offlineplayer% is(n't| not) trusted in %plot%"
                 );
     }
 
     private Expression<OfflinePlayer> playerExpression;
-    private Expression<String> plotID;
+    private Expression<Plot> plot;
 
     @Override
     public boolean check(Event e) {
-        String id = plotID.getSingle(e);
+        Plot plot = this.plot.getSingle(e);
         OfflinePlayer player = playerExpression.getSingle(e);
-        Plot plot;
-        if (id == null || player == null || (plot = PlotSquaredUtil.getPlot(id)) == null) return false;
+        if (plot == null || player == null) return false;
         boolean value = plot.isOwner(player.getUniqueId()) || plot.getTrusted().stream().anyMatch((v) -> v == player.getUniqueId());
         if (isNegated()) return !value;
         return value;
@@ -42,14 +40,14 @@ public class PlayerIsTrustedCond extends Condition {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return playerExpression.toString(e, debug) + (isNegated() ? " is not" : " is") + " trusted in " + plotID.toString(e, debug) + "?";
+        return playerExpression.toString(e, debug) + (isNegated() ? " is not" : " is") + " trusted in " + plot.toString(e, debug) + "?";
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
         playerExpression = (Expression<OfflinePlayer>) exprs[0];
-        plotID = (Expression<String>) exprs[1];
+        plot = (Expression<Plot>) exprs[1];
         setNegated(parseResult.mark == 2);
         return true;
     }

@@ -34,7 +34,7 @@ public class OwnedPlotsExpr extends SimpleExpression<Plot> {
 
         if (plotPlayer == null) return null;
 
-        return PlotSquaredUtil.plotAPI.getPlayerPlots(plotPlayer).stream().map(plot -> plot.getId().toString()).toArray(Plot[]::new);
+        return PlotSquaredUtil.plotAPI.getPlayerPlots(plotPlayer).toArray(Plot[]::new);
 
     }
 

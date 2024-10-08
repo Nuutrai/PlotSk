@@ -9,7 +9,6 @@ import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import com.plotsquared.core.plot.Plot;
 import com.plotsquared.core.plot.flag.PlotFlag;
-import me.github.reportcardsmc.plotsk.utils.PlotSquaredUtil;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 

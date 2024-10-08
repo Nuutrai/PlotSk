@@ -8,7 +8,6 @@ import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import com.plotsquared.core.plot.Plot;
-import me.github.reportcardsmc.plotsk.utils.PlotSquaredUtil;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,17 +18,16 @@ import org.jetbrains.annotations.Nullable;
 @RequiredPlugins("PlotSquared")
 public class PlotRatingExpr extends SimpleExpression<Number> {
     static {
-        Skript.registerExpression(PlotRatingExpr.class, Number.class, ExpressionType.COMBINED, "[PlotSquared] [the] [average] rating of plot [with id] %string%");
+        Skript.registerExpression(PlotRatingExpr.class, Number.class, ExpressionType.COMBINED, "[PlotSquared] [the] [average] rating of %plot%");
     }
 
-    private Expression<String> id;
+    private Expression<Plot> plot;
 
     @Nullable
     @Override
     protected Number[] get(Event e) {
-        Plot plot;
-        if (id.getSingle(e) == null || (plot = PlotSquaredUtil.getPlot(id.getSingle(e))) == null) return null;
-        return Double.isNaN(plot.getAverageRating()) ? null : new Number[]{plot.getAverageRating()};
+        if (this.plot.getSingle(e) == null) return null;
+        return Double.isNaN(this.plot.getSingle(e).getAverageRating()) ? null : new Number[]{plot.getSingle(e).getAverageRating()};
     }
 
     @Override
@@ -44,13 +42,13 @@ public class PlotRatingExpr extends SimpleExpression<Number> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "Rating of plot: " + id.toString(e, debug);
+        return "Rating of plot: " + plot.toString(e, debug);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
-        id = (Expression<String>) exprs[0];
+        plot = (Expression<Plot>) exprs[0];
         return true;
     }
 }

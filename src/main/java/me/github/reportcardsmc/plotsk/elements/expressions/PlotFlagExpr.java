@@ -11,7 +11,6 @@ import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
 import com.plotsquared.core.plot.Plot;
 import com.plotsquared.core.plot.flag.GlobalFlagContainer;
-import me.github.reportcardsmc.plotsk.utils.PlotSquaredUtil;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,7 +46,7 @@ public class PlotFlagExpr extends SimpleExpression<Object> {
     }
 
     @Override
-    public Class<? extends Object> getReturnType() {
+    public Class<?> getReturnType() {
         return Object.class;
     }
 

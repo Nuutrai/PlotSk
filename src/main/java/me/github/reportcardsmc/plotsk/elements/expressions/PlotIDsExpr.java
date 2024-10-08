@@ -7,6 +7,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import com.plotsquared.core.plot.Plot;
 import me.github.reportcardsmc.plotsk.utils.PlotSquaredUtil;
 import org.bukkit.World;
 import org.bukkit.event.Event;
@@ -19,24 +20,24 @@ import java.util.Objects;
 @Examples({"command /ids:", "    trigger:", "        send \"Plots: %all plot ids in player's world%\""})
 @Since("1.0")
 @RequiredPlugins("PlotSquared")
-public class PlotIDsExpr extends SimpleExpression<String> {
+public class PlotIDsExpr extends SimpleExpression<Plot> {
 
     static {
-        Skript.registerExpression(PlotIDsExpr.class, String.class, ExpressionType.SIMPLE, "[PlotSquared] all [of the] plot ids [in %-world%]");
+        Skript.registerExpression(PlotIDsExpr.class, Plot.class, ExpressionType.SIMPLE, "[PlotSquared] all [of the] plots [in %-world%]");
     }
 
     private Expression<World> worldExpression;
 
     @Nullable
     @Override
-    protected String[] get(Event e) {
+    protected Plot[] get(Event e) {
         World world;
         if (worldExpression != null) {
             world = worldExpression.getSingle(e);
             if (world != null)
-                return PlotSquaredUtil.plotAPI.getAllPlots().stream().filter((p) -> Objects.equals(p.getWorldName(), world.getName())).map((p) -> p.getId().toString()).toArray(String[]::new);
+                return (Plot[]) PlotSquaredUtil.plotAPI.getAllPlots().stream().filter((p) -> Objects.equals(p.getWorldName(), world.getName())).toArray();
         }
-        return PlotSquaredUtil.plotAPI.getAllPlots().stream().map((p) -> p.getId().toString()).toArray(String[]::new);
+        return PlotSquaredUtil.plotAPI.getAllPlots().toArray(new Plot[0]);
     }
 
     @Override
@@ -45,8 +46,8 @@ public class PlotIDsExpr extends SimpleExpression<String> {
     }
 
     @Override
-    public Class<? extends String> getReturnType() {
-        return String.class;
+    public Class<? extends Plot> getReturnType() {
+        return Plot.class;
     }
 
     @Override

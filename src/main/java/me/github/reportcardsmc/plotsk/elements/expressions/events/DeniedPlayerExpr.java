@@ -27,20 +27,16 @@ public class DeniedPlayerExpr extends SimpleExpression<OfflinePlayer> {
 
     @Nullable
     private static OfflinePlayer getPlayer(final @Nullable Event e) {
-        if (e == null) return null;
-        if (e instanceof PlayerDeniedFromPlot) {
-            final PlayerDeniedFromPlot main = (PlayerDeniedFromPlot) e;
-            return main.getDenied();
-        } else if (e instanceof PlayerUndeniedFromPlot) {
-            final PlayerUndeniedFromPlot main = (PlayerUndeniedFromPlot) e;
-            return main.getUndenied();
-        }
-        return null;
+        return switch (e) {
+            case PlayerDeniedFromPlot main -> main.getDenied();
+            case PlayerUndeniedFromPlot main -> main.getUndenied();
+            case null, default -> null;
+        };
     }
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        if (!ScriptLoader.isCurrentEvent(PlayerDeniedFromPlot.class, PlayerUndeniedFromPlot.class)) {
+        if (!getParser().isCurrentEvent(PlayerDeniedFromPlot.class, PlayerUndeniedFromPlot.class)) {
             Skript.error("Cannot use 'denied player' outside of a denied/undenied from plot event");
             return false;
         }

@@ -26,8 +26,7 @@ public class EventDirectionExpr extends SimpleExpression<String> {
     @Nullable
     @Override
     protected String[] get(Event e) {
-        if (e instanceof PlayerMergePlot) {
-            PlayerMergePlot main = (PlayerMergePlot) e;
+        if (e instanceof PlayerMergePlot main) {
             return new String[]{main.getDirection()};
         }
         return null;
@@ -50,7 +49,7 @@ public class EventDirectionExpr extends SimpleExpression<String> {
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
-        if (!ScriptLoader.isCurrentEvent(PlayerMergePlot.class)) {
+        if (!getParser().isCurrentEvent(PlayerMergePlot.class)) {
             Skript.error("Cannot use 'merge direction' outside of a plot merge event");
             return false;
         }

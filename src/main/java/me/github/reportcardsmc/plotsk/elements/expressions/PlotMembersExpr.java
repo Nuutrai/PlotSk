@@ -17,8 +17,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 
-import static me.github.reportcardsmc.plotsk.utils.PlotSquaredUtil.getPlot;
-
 @Name("Members of Plot")
 @Description("A list of players that are marked as a member in the plot")
 @Examples({"command /members:", "    trigger:", "        send \"Members: %members in plot plot at player%\""})
@@ -27,16 +25,16 @@ import static me.github.reportcardsmc.plotsk.utils.PlotSquaredUtil.getPlot;
 public class PlotMembersExpr extends SimpleExpression<OfflinePlayer> {
 
     static {
-        Skript.registerExpression(PlotMembersExpr.class, OfflinePlayer.class, ExpressionType.COMBINED, "[PlotSquared] members (in|of) plot [with id] %string%");
+        Skript.registerExpression(PlotMembersExpr.class, OfflinePlayer.class, ExpressionType.COMBINED, "[PlotSquared] members (in|of) %plot%");
     }
 
-    private Expression<String> id;
+    private Expression<Plot> plot;
 
     @Nullable
     @Override
     protected OfflinePlayer[] get(Event e) {
-        Plot plot;
-        if (id.getSingle(e) == null || (plot = getPlot(id.getSingle(e))) == null) return null;
+        if (this.plot.getSingle(e) == null) return null;
+        Plot plot = this.plot.getSingle(e);
         return plot.getMembers().stream().map(Bukkit::getOfflinePlayer).toArray(OfflinePlayer[]::new);
     }
 
@@ -52,20 +50,20 @@ public class PlotMembersExpr extends SimpleExpression<OfflinePlayer> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "Find members players of plot " + id.toString(e, debug);
+        return "Find members players of plot " + plot.toString(e, debug);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
-        id = (Expression<String>) exprs[0];
+        plot = (Expression<Plot>) exprs[0];
         return true;
     }
 
     @Override
     public void change(Event e, @Nullable Object[] delta, Changer.ChangeMode mode) {
-        Plot plot;
-        if (id.getSingle(e) == null || (plot = getPlot(id.getSingle(e))) == null) return;
+        Plot plot = this.plot.getSingle(e);
+        if (this.plot.getSingle(e) == null) return;
         OfflinePlayer player = (OfflinePlayer) delta[0];
         if (player == null) return;
         switch (mode) {

@@ -27,20 +27,16 @@ public class TrustedPlayerExpr extends SimpleExpression<OfflinePlayer> {
 
     @Nullable
     private static OfflinePlayer getPlayer(final @Nullable Event e) {
-        if (e == null) return null;
-        if (e instanceof PlayerTrustedOnPlot) {
-            final PlayerTrustedOnPlot main = (PlayerTrustedOnPlot) e;
-            return main.getTrusted();
-        } else if (e instanceof PlayerUntrustedFromPlot) {
-            final PlayerUntrustedFromPlot main = (PlayerUntrustedFromPlot) e;
-            return main.getTrusted();
-        }
-        return null;
+        return switch (e) {
+            case PlayerTrustedOnPlot main -> main.getTrusted();
+            case PlayerUntrustedFromPlot main -> main.getTrusted();
+            case null, default -> null;
+        };
     }
 
     @Override
     public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
-        if (!ScriptLoader.isCurrentEvent(PlayerTrustedOnPlot.class, PlayerUntrustedFromPlot.class)) {
+        if (!getParser().isCurrentEvent(PlayerTrustedOnPlot.class, PlayerUntrustedFromPlot.class)) {
             Skript.error("Cannot use 'trusted player' outside of a trusted/untrusted from plot event");
             return false;
         }

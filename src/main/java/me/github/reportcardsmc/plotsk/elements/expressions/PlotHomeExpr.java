@@ -12,12 +12,10 @@ import ch.njol.util.coll.CollectionUtils;
 import com.plotsquared.core.location.BlockLoc;
 import com.plotsquared.core.plot.Plot;
 import com.sk89q.worldedit.math.BlockVector3;
-import me.github.reportcardsmc.plotsk.utils.PlotSquaredUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
-
 
 @Name("Home of Plot")
 @Description("A plots home location")
@@ -57,7 +55,7 @@ public class PlotHomeExpr extends SimpleExpression<Location> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "Home of plot: " + plot.getSingle(e).getId();
+        return "Home of plot: " + plot.getSingle(e).toString();
     }
 
     @SuppressWarnings("unchecked")

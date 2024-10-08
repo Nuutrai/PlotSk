@@ -16,16 +16,22 @@ public class Types {
                 .name("Plot")
                 .description("Represents a PlotSquared plot")
                 .since("INSERT VERSION")
-                .parser(new Parser<Plot>() {
+                .parser(new Parser<>() {
 
                     @Override
-                    public Plot parse(final String id, final ParseContext context) { return null; }
+                    public Plot parse(final String id, final ParseContext context) {
+                        return null;
+                    }
 
                     @Override
-                    public String toString(final Plot plot, final int arg1) { return plot.getId().toString(); }
+                    public String toString(final Plot plot, final int arg1) {
+                        return plot.getId().toString();
+                    }
 
                     @Override
-                    public String toVariableNameString(final Plot plot) { return "plot-" + plot.getId(); }
+                    public String toVariableNameString(final Plot plot) {
+                        return "plot-" + plot.getId();
+                    }
 
                 })
         );

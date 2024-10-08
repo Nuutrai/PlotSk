@@ -8,7 +8,6 @@ import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import com.plotsquared.core.plot.Plot;
-import me.github.reportcardsmc.plotsk.utils.PlotSquaredUtil;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
@@ -49,7 +48,7 @@ public class PlotBiomeExpr extends SimpleExpression<String> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "biome of plot " + plot.getSingle(e).getId();
+        return "biome of plot " + plot.getSingle(e).toString();
     }
 
     @SuppressWarnings("unchecked")

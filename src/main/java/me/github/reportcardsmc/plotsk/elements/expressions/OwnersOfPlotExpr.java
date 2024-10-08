@@ -15,8 +15,6 @@ import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static me.github.reportcardsmc.plotsk.utils.PlotSquaredUtil.getPlot;
-
 @Name("Owners of Plot")
 @Description("A list of owners in a plot")
 @Examples({"command /owners:", "    trigger:", "        send \"Plot Owners: %owners of plot plot at player%\""})
@@ -55,7 +53,7 @@ public class OwnersOfPlotExpr extends SimpleExpression<OfflinePlayer> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "owners of plot " + plot.getSingle(e).getId();
+        return "owners of plot " + plot.getSingle(e).toString();
     }
 
     @SuppressWarnings("unchecked")
