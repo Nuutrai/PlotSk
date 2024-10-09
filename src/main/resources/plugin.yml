@@ -1,7 +1,7 @@
-name: Plosk
-version: '${project.version}'
-main: me.github.reportcardsmc.plosk.Plosk
+name: PlotSk
+version: '1.2.1'
+main: me.github.reportcardsmc.plotsk.PlotSk
 softdepend: [ PlotSquared ]
 depend: [ Skript ]
-authors: [ ReportCardsMC ]
-description: Skript addon for plot squared 6 support
+authors: [ ReportCardsMC, Nuutrai ]
+description: Skript addon for plot squared 7 support
