@@ -22,7 +22,7 @@ public class Types {
                 .user("plot")
                 .name("Plot")
                 .description("Represents a PlotSquared plot")
-                .since("INSERT VERSION")
+                .since("1.3.0")
                 .parser(new Parser<Plot>() {
 
                     @Override
