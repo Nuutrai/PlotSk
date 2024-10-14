@@ -53,7 +53,7 @@ public class EffTrust extends Effect {
                 plot.addTrusted(player);
             }
         } else {
-            if (!plot.getTrusted().contains(player)) {
+            if (plot.getTrusted().contains(player)) {
                 plot.removeTrusted(player);
             }
         }
