@@ -17,7 +17,7 @@ import java.util.UUID;
 @Examples({
         "if player is trusted in plot(0,5):",
         "\tuntrust player from plot(0,5)"})
-@Since("1.3")
+@Since("1.3.0")
 @RequiredPlugins("PlotSquared")
 public class EffTrust extends Effect {
 

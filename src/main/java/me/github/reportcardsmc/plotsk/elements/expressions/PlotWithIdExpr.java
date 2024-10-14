@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Plot With ID")
 @Description("Returns a plot object from a given id.")
 @Examples({"set {_plot} to plot with id \"7;3\""})
-@Since("1.3")
+@Since("1.3.0")
 @RequiredPlugins("PlotSquared")
 public class PlotWithIdExpr extends SimpleExpression<Plot> {
 

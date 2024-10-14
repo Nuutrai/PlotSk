@@ -64,6 +64,6 @@ public class Types {
         })
                 .description("Returns a plot object based off of the x and y arguments")
                 .examples("plot(7,9) # This is equal to `plot with id \"7;9\"`")
-                .since("1.3");
+                .since("1.3.0");
     }
 }

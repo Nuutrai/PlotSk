@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Home Plot")
 @Description("Returns the home plot of a player.")
 @Examples({"send player to home plot of player"})
-@Since("1.3")
+@Since("1.3.0")
 @RequiredPlugins("PlotSquared")
 public class ExprHomePlot extends SimpleExpression<Plot> {
 

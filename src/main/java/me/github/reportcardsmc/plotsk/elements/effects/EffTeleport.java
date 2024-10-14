@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 @Name("Teleport To Plot")
 @Description("Teleports a player to a plot.")
 @Examples({"send player to home plot of player"})
-@Since("1.3")
+@Since("1.3.0")
 @RequiredPlugins("PlotSquared")
 public class EffTeleport extends Effect {
 
