@@ -1,6 +1,7 @@
 package me.github.reportcardsmc.plotsk.elements.expressions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -11,6 +12,11 @@ import me.github.reportcardsmc.plotsk.utils.PlotSquaredUtil;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
+@Name("Plot With ID")
+@Description("Returns a plot object from a given id.")
+@Examples({"set {_plot} to plot with id \"7;3\""})
+@Since("1.3")
+@RequiredPlugins("PlotSquared")
 public class PlotWithIdExpr extends SimpleExpression<Plot> {
 
     static {

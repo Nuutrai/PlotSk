@@ -61,6 +61,9 @@ public class Types {
                 return new Plot[]{PlotSquaredUtil.getPlot(params[0][0] + ";" + params[1][0])};
 
             }
-        });
+        })
+                .description("Returns a plot object based off of the x and y arguments")
+                .examples("plot(7,9) # This is equal to `plot with id \"7;9\"`")
+                .since("1.3");
     }
 }

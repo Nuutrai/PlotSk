@@ -1,6 +1,7 @@
 package me.github.reportcardsmc.plotsk.elements.expressions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
@@ -12,6 +13,11 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
+@Name("Home Plot")
+@Description("Returns the home plot of a player.")
+@Examples({"send player to home plot of player"})
+@Since("1.3")
+@RequiredPlugins("PlotSquared")
 public class ExprHomePlot extends SimpleExpression<Plot> {
 
     static {

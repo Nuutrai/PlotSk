@@ -1,6 +1,7 @@
 package me.github.reportcardsmc.plotsk.elements.effects;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
@@ -15,6 +16,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.Nullable;
 
+@Name("Teleport To Plot")
+@Description("Teleports a player to a plot.")
+@Examples({"send player to home plot of player"})
+@Since("1.3")
+@RequiredPlugins("PlotSquared")
 public class EffTeleport extends Effect {
 
     static {

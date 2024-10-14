@@ -1,6 +1,7 @@
 package me.github.reportcardsmc.plotsk.elements.effects;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
@@ -11,6 +12,13 @@ import org.bukkit.event.Event;
 
 import java.util.UUID;
 
+@Name("Trust To Plot")
+@Description("Trusts and untrusts a player to and from a plot.")
+@Examples({
+        "if player is trusted in plot(0,5):",
+        "\tuntrust player from plot(0,5)"})
+@Since("1.3")
+@RequiredPlugins("PlotSquared")
 public class EffTrust extends Effect {
 
     static {
