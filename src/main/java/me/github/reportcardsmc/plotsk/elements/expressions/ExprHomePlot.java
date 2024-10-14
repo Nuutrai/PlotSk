@@ -22,7 +22,7 @@ public class ExprHomePlot extends SimpleExpression<Plot> {
 
     @Override
     protected Plot[] get(Event event) {
-        return new Plot[]{PlotSquaredUtil.getPlot(player.getSingle(event))};
+        return new Plot[]{PlotSquaredUtil.getPlotOwner(player.getSingle(event))};
     }
 
     @Override

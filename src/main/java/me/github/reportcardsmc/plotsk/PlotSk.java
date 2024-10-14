@@ -22,7 +22,7 @@ public final class PlotSk extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        addon = Skript.registerAddon(this);
+        addon = Skript.registerAddon(this).setLanguageFileDirectory("lang");
         if (!loadClasses()) {
             getLogger().severe("Couldn't load skript classes.");
             getServer().getPluginManager().disablePlugin(this);
