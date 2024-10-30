@@ -53,7 +53,7 @@ public class OwnersOfPlotExpr extends SimpleExpression<OfflinePlayer> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "owners of plot " + plot.getSingle(e).toString();
+        return "owners of plot " + plot.toString(e, debug);
     }
 
     @SuppressWarnings("unchecked")

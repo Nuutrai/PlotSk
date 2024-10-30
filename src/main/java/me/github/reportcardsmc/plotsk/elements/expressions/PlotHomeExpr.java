@@ -55,7 +55,7 @@ public class PlotHomeExpr extends SimpleExpression<Location> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "Home of plot: " + plot.getSingle(e).toString();
+        return "Home of plot: " + plot.toString(e, debug);
     }
 
     @SuppressWarnings("unchecked")

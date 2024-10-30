@@ -48,7 +48,7 @@ public class PlotFlagsExpr extends SimpleExpression<String> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "All Flags of plot: " + plot.getSingle(e).getId();
+        return "All Flags of plot: " + plot.toString(e, debug);
     }
 
     @SuppressWarnings("unchecked")

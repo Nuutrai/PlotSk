@@ -50,7 +50,7 @@ public class PlotWithIdExpr extends SimpleExpression<Plot> {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "the plot with id " + id.toString();
+        return "the plot with id " + id.toString(event, b);
     }
 
 
