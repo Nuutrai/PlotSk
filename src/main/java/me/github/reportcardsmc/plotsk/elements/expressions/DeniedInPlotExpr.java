@@ -53,7 +53,7 @@ public class DeniedInPlotExpr extends SimpleExpression<OfflinePlayer> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "Find denied players in plot " + plot.getSingle(e).toString();
+        return "Find denied players in plot " + plot.toString(e, debug);
     }
 
     @SuppressWarnings("unchecked")

@@ -52,7 +52,7 @@ public class PlotFlagExpr extends SimpleExpression<Object> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "flag " + flag.toString(e, debug) + " of plot " + plot.getSingle(e).getId();
+        return "flag " + flag.toString(e, debug) + " of plot " + plot.toString(e, debug);
     }
 
     @SuppressWarnings("unchecked")

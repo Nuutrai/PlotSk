@@ -48,7 +48,7 @@ public class PlotBiomeExpr extends SimpleExpression<String> {
 
     @Override
     public String toString(@Nullable Event e, boolean debug) {
-        return "biome of plot " + plot.getSingle(e).toString();
+        return "biome of plot " + plot.toString(e, debug);
     }
 
     @SuppressWarnings("unchecked")

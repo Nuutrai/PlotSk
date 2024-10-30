@@ -62,7 +62,7 @@ public class EffTrust extends Effect {
 
     @Override
     public String toString(@org.jetbrains.annotations.Nullable Event event, boolean b) {
-        return (untrust ? "un" : "") + "trust " + player.toString() + (untrust ? "from" : "to") + " plot with id " + plot.toString();
+        return (untrust ? "un" : "") + "trust " + player.toString(event, b) + (untrust ? "from" : "to") + " plot with id " + plot.toString(event, b);
     }
 
 }
