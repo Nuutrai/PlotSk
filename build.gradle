@@ -26,12 +26,10 @@ dependencies {
     compileOnly("com.intellectualsites.plotsquared:plotsquared-core")
     compileOnly("com.intellectualsites.plotsquared:plotsquared-bukkit")
 
-    compileOnly group: 'com.sk89q.worldguard', name: 'worldguard-legacy', version: '7.0.0-SNAPSHOT'
     compileOnly("com.sk89q.worldedit:worldedit-core:7.2.6")
 
     compileOnly("com.github.SkriptLang:Skript:2.9.2") {
         exclude group: "com.sk89q", module: "worldguard"
-        exclude group: "com.sk89q.worldguard", module: "worldguard-legacy"
         exclude group: "com.github.marcelo-mason", module: "PreciousStones"
         exclude group: "net.milkbowl.vault", module: "Vault"
     }
