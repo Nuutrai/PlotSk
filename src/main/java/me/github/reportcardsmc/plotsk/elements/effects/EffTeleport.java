@@ -62,7 +62,7 @@ public class EffTeleport extends Effect {
 
     @Override
     public String toString(@Nullable Event event, boolean b) {
-        return "plot-teleport " + player.toString() + " to plot " + plot.toString();
+        return "plot-teleport " + player.toString(event, b) + " to plot " + plot.toString(event, b);
     }
 
 

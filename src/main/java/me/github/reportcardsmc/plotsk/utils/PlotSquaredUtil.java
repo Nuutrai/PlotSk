@@ -27,6 +27,8 @@ public class PlotSquaredUtil {
     public static Plot getPlotOwner(@Nullable OfflinePlayer player) {
         if (player == null) return null;
         for (Plot plot : plotAPI.getAllPlots()) {
+            if (plot.getOwner() == null)
+                continue;
             if (plot.getOwner().equals(player.getUniqueId())) return plot;
         }
         return null;
